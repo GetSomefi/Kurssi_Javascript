@@ -1,0 +1,23 @@
+Pääasiallinen kurssikirja
+https://exploringjs.com/js/book
+
+Syntaksi
+https://exploringjs.com/js/book/ch_syntax.html 
+(<- Esimerkkejä)
+
+Console
+https://exploringjs.com/js/book/ch_console.html
+
+Muuttujat
+https://exploringjs.com/js/book/ch_variables-assignment.html
+
+
+
+-----
+
+Lisämateriaali
+GoalKicker.com – JavaScript® Notes for Professionals
+https://drive.google.com/file/d/1OonOQwMOTMKLTjTViqIt14Pi1l5rOBoM/view
+
+Javascript the Good Parts
+https://github.com/dwyl/Javascript-the-Good-Parts-notes
