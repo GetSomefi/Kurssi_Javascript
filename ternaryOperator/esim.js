@@ -3,3 +3,4 @@ const toinenTieto = false; //huom jos muuttujaa ei ole olemassa ohjelma kaatuu (
 
 const jokinTieto = (toinenTieto ? "On olemassa" : "Ei ole olemassa");
 console.log(jokinTieto);
+
