@@ -45,4 +45,12 @@ console.log(tulos);                                         // 2. &&            
                                                             // 3. a !== null        ->  jos a ei ole tyypiltään tai arvoltaan null          (arvo on koira joten tämä palauttaa true)
                                                             // 4. ?                 ->  ehto/ehdot päättyy
                                                             // 5. a : b;            ->  jos ehto on totta palautetaan a ja muuten b         (1. ja 2. on true eli palauttaa muuttujan a (kissa))
-                                                         
+
+// ??=
+//https://exploringjs.com/js/book/ch_undefined-null.html#nullish-coalescing-assignment-operator
+let c; //= "Nyt on";
+let d = "Virhe: Muuttuja c:tä ei ole annettu!";
+
+c ??= d;
+
+console.log(c); //tulostaa Virhe: Muuttuja c:tä ei ole annettu!, koska c on undefined
