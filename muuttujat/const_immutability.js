@@ -1,4 +1,6 @@
-//TÄRKEÄ JUTTU "muuttumattomuudesta" 
+//TÄRKEÄ JUTTU "muuttumattomuudesta"
+//https://exploringjs.com/js/book/ch_variables-assignment.html#const-and-immutability
+
 //const
 //vaikka const on muuttumaton esim. objektin tietoja voi muuttaa
 const jokuObjekti = {
@@ -12,6 +14,7 @@ console.log(jokuObjekti);
 
 //jokuobjektiin voi jopa lisätä uusia propertyjä
 jokuObjekti['ika'] = 10;
+//tai jokuObjekti.ika = 10;
 console.log(jokuObjekti);
 
 //mutta jokuobjektia ei voi enää muuttaa täysin toiseen arvoon kuten numeroksi tai stringiksi

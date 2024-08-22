@@ -133,3 +133,59 @@ try{
         console.log( "prop-propertyä ei ole olemassa", Boolean(obj.prop) );
     }
 }
+
+//funktion parametri (onko olemassa)
+//https://exploringjs.com/js/book/ch_booleans.html#use-case-was-a-parameter-provided
+const jokuFunktio = (parametri) => {
+    return Boolean(parametri);
+}
+console.log("ilman argumentteja: "+ jokuFunktio()); //ilman argumentteja
+console.log("argumentin kera: " + jokuFunktio("kissa")); //argumentin kera
+
+//in operaattori
+//https://exploringjs.com/js/book/ch_objects.html#in-operator
+//Varsinkin objektien kanssa työskennellessä in-operaattori voi olla kätevä
+const jokuObjekti = {
+    merkki:"Volvo",
+    malli:"Amazon"
+}
+
+//vertailu onnistuu perinteisesti näin
+if( jokuObjekti.vuosimalli ){
+    console.log("Vuosimalli on " + jokuObjekti.vuosimalli);
+}else{
+    console.log("Vuosimalli tieto puuttuu!");
+}
+
+//tai in-operaattoria käyttämällä
+if( 'vuosimalli' in jokuObjekti ){
+    console.log("Vuosimalli on " + jokuObjekti.vuosimalli);
+}else{
+    console.log("Vuosimalli tieto puuttuu!");
+}
+
+//lisätään vielä vuosimalli objektiin ja testataan toimivaksi (eli pitäisi mennä if-haaraan)
+jokuObjekti['vuosimalli'] = 1960;
+//tai jokuObjekti.vuosimalli = 1960;
+if( 'vuosimalli' in jokuObjekti ){
+    console.log("Vuosimalli on " + jokuObjekti.vuosimalli);
+}else{
+    console.log("Vuosimalli tieto puuttuu!");
+}
+//ja jos tässä kohtaa ihmettelet miten const (constant) objektia voi muokata jälkikäteen 
+//tutustu tai kertaa
+//https://github.com/GetSomefi/Kurssi_Javascript/blob/main/muuttujat/const_immutability.js
+
+//nyt varmaan ternaryOperator käy paremmin järkeen
+//https://exploringjs.com/js/book/ch_booleans.html#conditional-operator
+//https://github.com/GetSomefi/Kurssi_Javascript/blob/main/ternaryOperator
+
+//Eli
+// ehto ? jos : muuten
+let vuosimalli = 'vuosimalli' in jokuObjekti ? jokuObjekti.vuosimalli : "Vuosimalli tieto puuttuu!";
+console.log("Vuosimallin ternaryOperator testi: " + vuosimalli, jokuObjekti);
+
+//ja jos tieto puuttuu
+delete jokuObjekti.vuosimalli; //delete poistaa objektin jäsenen/ominaisuuden
+vuosimalli = 'vuosimalli' in jokuObjekti ? jokuObjekti.vuosimalli : "Vuosimalli tieto puuttuu!";
+console.log("Vuosimallin ternaryOperator testi: " + vuosimalli, jokuObjekti);
