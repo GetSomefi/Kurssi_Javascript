@@ -19,6 +19,13 @@ console.log( "4. ", tutkittavaTeksti.indexOf("ä") );
 // 3.  true                                 //includes() palauttaa vain tiedon löytyikö. Jos merkkiä ei löytynyt saadaan arvoksi false.
 // 4.  9                                    //indexOf() palauttaa sijainnin mistä merkki löytyi. Jos merkkiä ei löytynyt saadaan arvoksi -1.  
 
+//search()
+console.log(  "5. ", tutkittavaTeksti.search("ä")  );
+
+let salasana = "TosiHeikko";
+if(salasana.search(/[0-9]/) < 1){
+    console.log("6. Salasanan tulee sisältää vähintään yksi numero");
+}
 
 /* 
 Yleisimpiä säännöllisten lausekkeiden (RegEx) osia
