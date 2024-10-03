@@ -38,10 +38,10 @@ muuttuja = undefined;
 console.log("muuttuja = undefined; -> " + Boolean(muuttuja)); //false
 
 muuttuja = null;
-console.log("muuttuja = null; -> " + Boolean(muuttuja));
+console.log("muuttuja = null; -> " + Boolean(muuttuja)); // false
 
 muuttuja = NaN;
-console.log("muuttuja = Nan; -> " + Boolean(muuttuja));
+console.log("muuttuja = Nan; -> " + Boolean(muuttuja)); // false
 
 muuttuja = ""; // vain tyhjä string tuottaa falsen, muut tuottavat true
 console.log("muuttuja = \"\"; -> " + Boolean(muuttuja)); //false
