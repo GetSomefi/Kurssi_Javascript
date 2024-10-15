@@ -37,20 +37,30 @@ console.log(enkkua);
 //String() on globaali ja .toString() on olion prototyypissä sijaitseva metodi
 //.toString ei osaa muuntaa nullia tai undefined arvoja
 // -> String() on inan turvallisempi (ei kaada ohjelmaa)
+
+//toString null
 let testi = null;
+//testi.toString(); //<- kaataa ohjelman (pakko käyttää try catch)
 try {
     testi.toString();
 } catch (error) {
     console.log(error.message); //<- menee tänne
 }
-console.log(String(testi));
+
+//String() null
+console.log(String(testi)); //ei kaada ohjelmaa vaikka null
+
+//toString undefined
 testi = undefined;
 try {
     testi.toString();
 } catch (error) {
     console.log(error.message); //<- menee tänne
 }
+//String() undefined
 console.log(String(testi));
+
+////////////////
 
 //template literal ( `` )
 {
@@ -68,6 +78,8 @@ for (let index = 0; index < kirjaimia.length; index++) {
     console.log( index+1 + ". " + kirjaimia[index] );
 }
 
+//console.log(kirjaimia[1]);
+
 //hae tekstistä 
 //Tutustu: https://github.com/GetSomefi/Kurssi_Javascript/tree/main/haeTeksti(RegEx)
 
@@ -80,6 +92,7 @@ Tulostaa:
                 Minun nimeni on Bob🔧.
                 Olen sen ja sen vuotias ja asun...
 */
+
 console.log(lause.trim());
 /*
 Tulostaa:
@@ -92,6 +105,9 @@ Minun nimeni on Bob🔧.
 //tai 
 //replaceAll() korvaa kaikki esiintymät ja vaatii g-lipun jos monta korvattavaa
 
+//                                      Korvattavat merkit
+//                                   ____|___
+//                                  |       |
 let putsattuLause = lause.replace(/[\n,\t,🔧]/g,'');
 console.log(putsattuLause);
 //tai
@@ -104,24 +120,24 @@ Minun nimeni on Bob. Olen sen ja sen vuotias ja asun...
 
 //jos korvataan vain tietyn merkin ensimmäinen esiintymä (ei vaadi g-lippua)
 putsattuLause = lause.replace('\t','');
-console.log(putsattuLause);
+console.log("# Ensimmäinen tabit poistettu", putsattuLause);
 
 //jos korvataan vain tietty merkki kaikkialla (ei vaadi g-lippua)
 putsattuLause = lause.replaceAll('\t','');
-console.log(putsattuLause);
+console.log("# Kaikki tabit poistettu", putsattuLause);
 
 //luo string repeatilla
 console.log("Käyttäjätunnus: Mes" + '*'.repeat(4) + "90" );
 
 //helpota käyttäjän syötteitä toLowerCase() ja toUpperCase()
-const helppotunnus = "testiriino";
+const helppotunnus = "Testiriino";
 const testaa = "TeSTiRiiNo";
 
 if(helppotunnus === testaa){
     console.log("Jee, tarkalleen oikein!");
 }else{
     console.log("Tunnus ei ollut tarkalleen oikein. Helpotetaan...");
-    if(helppotunnus === testaa.toLowerCase()){
+    if(helppotunnus.toLowerCase() === testaa.toLowerCase()){
         console.log("Jee, nyt onnistui!");
     }else{
         console.log("Käyttäjätunnusta ei ole olemassa!");
@@ -135,6 +151,7 @@ htmlDiv += "<div>";
 htmlDiv += "</div>";
 
 //join() ( array -> string )
+//yhdistä array yhdeksi merkkijonoksi
 {
 const lause = ["Olen", " ", "niin", " ", "innoissani", " ", "JavaScriptistä!"];
                         //'' merkki jolla "pilkut korvataan" 
@@ -142,11 +159,13 @@ console.log( lause.join('') );
 }
 
 //slice()
+//"pätkäise" osa merkkijonosta
 const tutkittavaTeksti = "Onkohan tässä mitään järkeä tai kärkeä";
 console.log("Koko teksti: " + tutkittavaTeksti);
 console.log("Lyhennetty teksti: " + tutkittavaTeksti.slice(0,tutkittavaTeksti.length-7));
 
 //split
+//tee array merkkijonosta erottimella
                                     //erotin
 const osat = tutkittavaTeksti.split(" "); //palauttaa arrayn
 console.log("Tutkittavan tekstin osat:");
@@ -155,8 +174,12 @@ for (const osa in osat) {
 }
 
 //at()
+//           0123456
+//           |
 const abc = "takussa";
 console.log( abc.at(1).toUpperCase() + abc.at(2) + abc.at(3) + " Ankka" );
 
-//
-console.log('x.x.'.replace(/./, '#'));
+// .: Vastaa mitä tahansa merkkiä (paitsi rivinvaihtoja).
+// -> https://github.com/GetSomefi/Kurssi_Javascript/blob/main/haeTeksti(RegEx)/esim.js
+console.log('x.x.'.replace(/./, '#')); // #.x.
+console.log('x.x.'.replace(/./g, '#')); // ####
