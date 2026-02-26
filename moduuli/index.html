@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Moduuli tapa 1 -->
+    <script type="module"> //Tiedostossa pitää olla type="module"
+        import {summa, siisti} from './jokumoduuli.mjs';
+        console.log("Summa", summa(1,2));
+
+        console.log("Siisti", siisti("#Hästäg@mope di.fi"));
+    </script>
+
+    <!-- Moduuli tapa 2 -->
+    <script type="module" src="moduulinkayttaja.mjs"></script>
+</head>
+<body>
+    Katso konsoli!
+</body>
+</html>
