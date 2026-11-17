@@ -1,8 +1,8 @@
 //TÄRKEÄ JUTTU "muuttumattomuudesta"
-//https://exploringjs.com/js/book/ch_variables-assignment.html#const-and-immutability
+//Exploring JavaScript (ES 2025), A Book For Programmers, sivu 97.
 
 //const
-//vaikka const on muuttumaton esim. objektin tietoja voi muuttaa
+//vaikka const on muuttumaton esim. objektin (tai arrayn) tietoja voi muuttaa
 const jokuObjekti = {
     nimi:"mauri"
 }
@@ -17,7 +17,7 @@ jokuObjekti['ika'] = 10;
 //tai jokuObjekti.ika = 10;
 console.log(jokuObjekti);
 
-//mutta jokuobjektia ei voi enää muuttaa täysin toiseen arvoon kuten numeroksi tai stringiksi
+//MUTTA jokuobjektia ei voi enää muuttaa täysin toiseen arvoon kuten numeroksi tai stringiksi
 jokuObjekti = 10; //virhe:  Assignment to constant variable.
 jokuObjekti = "testi";
 console.log(jokuObjekti);

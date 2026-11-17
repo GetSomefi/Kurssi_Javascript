@@ -40,6 +40,7 @@ const person = {
     age:67,
     veteran:true
 };
+
 //console.log("FOR OF (object)"); // kaikki arvot (values)
 // alla oleva ei toimi: person is not iterable
 // for(const oneItem of person){
@@ -54,3 +55,17 @@ console.log("FOR IN (object) -> values");
 for(const oneKey in person){
     console.log(`Avain ${oneKey} sisältää ${person[oneKey]}`);
 }
+
+console.log("FOR IN (object) -> values");
+for(const oneItem of Object.values(person)){
+    console.log(`Arvo ${oneItem}`);
+}
+
+console.log("FOREACH (object) -> values");
+//forEach? Ei toimi suoraan vaan vaatii myös Object.values
+Object.values(person).forEach(oneItem => {
+    console.log(`Arvo ${oneItem}`);
+});
+
+//mites MAP?
+//map ja kaverit ovatkin sitten oma tarinansa. Lisää aiheesta täältä: https://github.com/GetSomefi/Kurssi_Javascript/tree/main/mutatingMethods

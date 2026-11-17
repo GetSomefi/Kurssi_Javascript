@@ -1,7 +1,10 @@
+// Spread: unpack
+const numbers = [1, 2, 3];
+console.log(...numbers); // 1 2 3
 
-const person = { name: "joe", age: 80, veteran: false };
+// Rest: pack
+function showNumbers(...numbers) {
+    console.log(numbers); // [1, 2, 3]
+}
 
-const { name, ...rest } = person;
-
-console.log(name); // "joe"
-console.log(rest); //{ age: 80, veteran: false }
+showNumbers(1, 2, 3);
