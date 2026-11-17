@@ -1,3 +1,6 @@
+// Tämä esimerkki estää ohjelman kaatumisen, vaikka json-tiedostoa ei löytysi tai sen syntaksi olisi rikki. 
+// (Tämä yksinkertaistaa ratkaisun olematta paras tapa. Löydät paremman tavan täältä: https://github.com/GetSomefi/Kurssi_Javascript/blob/main/nodejs_backend/json_file_safe_better.js ) 
+
 const {createServer} = require('http'); //tarvitaan vain createServer ominaisuus
 const fs = require('fs');     //tiedoston lukuun tarvitaan filesystem = fs 
 const path = require('path'); //tiedoston polkuun pääsee käsiksi path-moduulilla
@@ -9,34 +12,42 @@ const port = 3000;
 const server = createServer((req, res) => {
   const filePath = path.join(__dirname, 'data_broken.json');
 
-  // Luetaan tiedosto aina asynkronisesti (vaihtoehtona readFileSync), jotta koko palvelimen ei tarvitse odottaa yhden käyttäjän pyyntöä. Testatessa merkityksetöntä, mutta merkitys kasvaa vasta oikeassa palvelinympäristössä, kun käyttäjiä on monia. 
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-        res.setHeader('Content-Type', 'application/json; charset=utf-8');
-        res.statusCode = 404; //http status-koodi "ei löytynyt"
-        const data = { 
-            name: "Tiedostoa ei löytynyt"
-        };
-        res.end(JSON.stringify(data));
-        return; // suoritus loppuu tähän jos tiedostoa ei löytynyt
-    }
-
-    //Tiedosto löytyi ja seuraavaksi käsitellään dataa. Tämä kohta kuitenkin rikkoo suorituksen, sillä se ei ymmärrä rikkinäistä jsonia.
-    console.log(data); // toimii tähän asti
-
-    const modifiedData = {...data}; //... on spread-syntaksi, joka luo data-objektista kopion (shallow copy). Näin alkuperäinen "data" pysyy koskemattomana.
-
-    //console.log(modifiedData); // toimii vieläkin, mutta tulostus on jo mitä sattuu
-
-    modifiedData.name = "Bob";
+  // Laitetaan "vaarallinen" tiedonmuokkaustoiminto try:n sisään ja näin koko ohjelma ei kaadu virheen sattuessa.  
+  // MUTTA nyt tiedoston lukeminen ei voi olla enää asynkroninen (readFile) tai try ei "huomaa" virhettä. 
+  // Muutetaan fs-toiminto readFileSync:iksi, jolloin try nappaa virheen. (Tämä yksinkertaistaa ratkaisun olematta paras tapa. Löydät paremman tavan täältä: https://github.com/GetSomefi/Kurssi_Javascript/blob/main/nodejs_backend/json_file_safe_better.js ) 
+  try {
+    const data = fs.readFileSync(filePath, 'utf8'); //synkroninen versio ei sisällä callbackiä eli "seuraavaa vaihetta" tai ,(tietoja)=>{//sitten} ei ole 
     
-    console.log(modifiedData); // toimii vielä, mutta tulostus on mitä sattuu ja name:'Bob' on mukana tulostuksessa.
+    //Jos tiedostoa ei löydy catch nappaa virheen (testaa muuttamalla filePath kohdassa data_broken.json nimeksi data_broken_.json)
+
+    const dataJSON = JSON.parse(data); // nyt koodi räjähtää (rikkinäisen parsiminen ei onnistu), mutta nyt koodi hyppää catchiin.
+  
+    // Edelleenkään tänne ei edetä jos json-tiedosto on rikki
+    const modifiedData = {...dataJSON}; //... on spread-syntaksi, joka luo data-objektista kopion (shallow copy). Näin alkuperäinen "data" pysyy koskemattomana.
+
+    modifiedData.name = "Bob"; // muutetaan Joe -> Bob
 
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-    res.end(modifiedData); // nyt koodi räjähtää ja saamme virheen [nodemon] app crashed - waiting for file changes before starting...
 
-    //Katso seuraava esimerkki, joka "kestää" tämän virheen
-  });
+    res.end(modifiedData); 
+      
+  } catch (error) { // catch:in error kertoo mukavasti mikä meni vikaan. Se onkin sitten toinen tarina miten tästä virheestä palaudutaan vaikka koko homma ei kaatunutkaan.
+    // Voit huoletta vastaa json-muodossa virheen (... kunhan se ei ole mikään rikkinäinen tiedosto)
+    let clearReason = "";
+    if (error instanceof SyntaxError) { // jos json parse epäonnistuu se palauttaa SyntaxErrorin, josta voimme käyttäjän pähkäilyä helpottaakseen kertoa json syntaksin olevan viallinen
+      clearReason = "Check the JSON syntax";
+    }
+    const response = {
+      status:400,
+      errorMsg:error.message, //error sisältää ihmisluettavan .message virheviestin 
+      clearReason
+    }
+
+                //400 = Bad Request
+    res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify(response));
+  }
+
 });
 
 

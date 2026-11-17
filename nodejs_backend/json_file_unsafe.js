@@ -24,18 +24,18 @@ const server = createServer((req, res) => {
     //Tiedosto löytyi ja seuraavaksi käsitellään dataa. Tämä kohta kuitenkin rikkoo suorituksen, sillä se ei ymmärrä rikkinäistä jsonia.
     console.log(data); // toimii tähän asti
 
-    const modifiedData = {...data}; //... on spread-syntaksi, joka luo data-objektista kopion (shallow copy). Näin alkuperäinen "data" pysyy koskemattomana.
-
-    //console.log(modifiedData); // toimii vieläkin, mutta tulostus on jo mitä sattuu
-
-    modifiedData.name = "Bob";
+    const dataJSON = JSON.parse(data); // nyt koodi räjähtää (rikkinäisen parsiminen ei onnistu) ja saamme virheen [nodemon] app crashed - waiting for file changes before starting...
     
-    console.log(modifiedData); // toimii vielä, mutta tulostus on mitä sattuu ja name:'Bob' on mukana tulostuksessa.
+    /*
+    Tänne koodi ei edes pääse virheen takia
+    const modifiedData = {...dataJSON}; //... on spread-syntaksi, joka luo data-objektista kopion (shallow copy). Näin alkuperäinen "data" pysyy koskemattomana.
+
+    modifiedData.name = "Bob"; // muutetaan Joe -> Bob
 
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-    res.end(modifiedData); // nyt koodi räjähtää ja saamme virheen [nodemon] app crashed - waiting for file changes before starting...
-
-    //Katso seuraava esimerkki, joka "kestää" tämän virheen
+    res.end(modifiedData); 
+    */
+    //Katso seuraava esimerkki, joka "kestää" virheen tästä: https://github.com/GetSomefi/Kurssi_Javascript/blob/main/nodejs_backend/json_file_safe.js 
   });
 });
 
